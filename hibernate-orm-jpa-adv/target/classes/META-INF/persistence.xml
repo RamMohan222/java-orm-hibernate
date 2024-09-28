@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                                 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+
+	<persistence-unit name="my-persistence-unit">
+		<description>Hibernate Tips</description>
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<class>com.hibernate.jpa.UserEntity</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<!--
+		ALL – To cache all entities
+		NONE – To cache none of your entities (default)
+		ENABLE_SELECTIVE – To cache only the entities annotated with @Cacheable or @Cacheable(true)
+		DISABLE_SELECTIVE – To cache all entities not annotated with @Cacheable(false)
+		 -->
+		<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+		<!--
+		 <jta-data-source>java:app/jdbc/MyDataSource</jta-data-source>
+		 Along with this dialect is enough in the properties
+		 -->
+
+		 <!--
+		 AUTO – Perform the validation if a bean validation implementation is available (default)
+		 CALLBACK– Activate the validation and throw an exception if no bean validation implementation is available
+		 NONE – Do not perform any validation
+		 <validation-mode>CALLBACK</validation-mode>
+		  -->
+
+		 <!--
+		 To configure entities
+		 <mapping-file></mapping-file>
+		 <jar-file></jar-file>
+		  -->
+
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+
+			<!-- JPA 2.x -->
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ips" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="root" />
+			<property name="javax.persistence.lock.timeout" value="100"/>
+			<property name="javax.persistence.query.timeout" value="100"/>
+
+			<!-- To generate the scripts from the schema -->
+			<property name="javax.persistence.schema-generation.scripts.action" value="drop-and-create"/>
+            <property name="javax.persistence.schema-generation.scripts.create-target" value="./create.sql"/>
+            <property name="javax.persistence.schema-generation.scripts.drop-target" value="./drop.sql" />
+
+			<!-- To generate the schema from the scripts -->
+			<!--
+			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
+            <property name="javax.persistence.schema-generation.create-script-source" value="create-db.sql" />
+            <property name="javax.persistence.schema-generation.drop-script-source" value="drop-db.sql" />
+            <property name="javax.persistence.sql-load-script-source" value="data.sql" />
+			 -->
+
+
+			<!-- JPA 3.x -->
+			<!--
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/jpaForBeginners" />
+            <property name="jakarta.persistence.jdbc.user" value="postgres" />
+            <property name="jakarta.persistence.jdbc.password" value="postgres" />
+			<property name="jakarta.persistence.lock.timeout" value="100" />
+			<property name="jakarta.persistence.query.timeout" value="100" />
+
+			Supported values are none (default), create, drop-and-create and drop.
+			<property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create" />
+            <property name="jakarta.persistence.schema-generation.create-script-source" value="create-db.sql" />
+            <property name="jakarta.persistence.schema-generation.drop-script-source" value="drop-db.sql" />
+            <property name="jakarta.persistence.sql-load-script-source" value="data.sql" />
+
+			// to generate the scripts for the schema
+            <property name="jakarta.persistence.schema-generation.scripts.action" value="drop-and-create"/>
+            <property name="jakarta.persistence.schema-generation.scripts.create-target" value="./create.sql"/>
+            <property name="jakarta.persistence.schema-generation.scripts.drop-target" value="./drop.sql"/>
+			-->
+		</properties>
+	</persistence-unit>
+</persistence>
